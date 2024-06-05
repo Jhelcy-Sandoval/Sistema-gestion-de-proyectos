@@ -1,13 +1,49 @@
 import { useState } from 'react'
 import { useAuth } from '../Auth/AuthProvider';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { ApiURL } from '../Auth/constants';
+import { AuthResponseError } from '../types/types';
 
 export default function Login() {
   const [ userEmail, setuserEmail ] = useState("");
   const [ userPassword, setuserPassword ] = useState("");
-  const auth = useAuth()
+  const [errorResponse, setErrorResponse] = useState("");
 
-  if (auth.isAuthenticated) {
+  const auth = useAuth()
+  const goTo = useNavigate()
+
+  async function handler(e: React.FormEvent<HTMLFormElement>){
+    e.preventDefault();
+    try {
+      const response = await fetch(`${ApiURL}/login`,{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+            body: JSON.stringify({
+              userEmail,
+              userPassword,
+            })
+        })
+
+      if (response.ok) {
+        console.log('user created successfull');
+        setErrorResponse("")
+        goTo("/")
+      }else{
+        console.log('something went wrong');
+        const json = (await response.json()) as AuthResponseError;
+        setErrorResponse(json.body.error);
+        return;
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  if (auth && auth.isAuthenticated) {
     return <Navigate to={'/dashboard'} />
   }
 
@@ -20,19 +56,23 @@ export default function Login() {
             <h2 className="mt-8 text-center text-2xl font-bold leading-9 tracking-tight">
               Iniciar sesión
             </h2>
+            <div>
+            {!! errorResponse &&
+              <p className='block text-sm font-medium leading-6 text-red-400 errorMessage bg-red-100 p-4 mt-3 rounded-md border-l-4 border-red-500'>{errorResponse}</p>
+            }
+            </div>
             <div className="mt-8">
-              <form className="space-y-6" >
+              <form className="space-y-6" onSubmit={handler}>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-400">Correo electrónico</label>
                   <div className="mt-2">
                     <input 
-                      id="email" 
-                      name="email" 
+                      id="userEmail" 
+                      name="userEmail" 
                       type="email" 
-                      autoComplete="email"
+                      autoComplete="email" 
                       value={userEmail} 
-                      onChange={(e) => setuserEmail(e.target.value)} 
-                      required 
+                      onChange={(e) => setuserEmail(e.target.value)}  
                       className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
                 </div>
@@ -46,13 +86,12 @@ export default function Login() {
                   </div>
                   <div className="mt-2">
                     <input 
-                      id="password" 
-                      name="password" 
+                      id="userPassword" 
+                      name="userPassword" 
                       type="password" 
                       autoComplete="current-password" 
-                      value={userPassword} 
+                      value={userPassword}  
                       onChange={(e) => setuserPassword(e.target.value)}
-                      required 
                       className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
                 </div>
