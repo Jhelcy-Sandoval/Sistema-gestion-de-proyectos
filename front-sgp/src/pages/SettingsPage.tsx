@@ -1,10 +1,13 @@
 import DefaultLayout from "../layout/DefaultLayout";
+import '../App.css'
 
-export default function Home () {
+export default function Settings () {
   return (
     <>
       <DefaultLayout>
-        Home
+        <section className="">
+          settings
+        </section>
       </DefaultLayout>
     </>
   )

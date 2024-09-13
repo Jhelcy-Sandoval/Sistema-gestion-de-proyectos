@@ -1,51 +1,29 @@
-import { useState } from 'react'
-import { useAuth } from '../Auth/AuthProvider';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { ApiURL } from '../Auth/constants';
-import { AuthResponseError } from '../types/types';
+import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { AuthContextType, AuthResponseError } from '../types/types';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
-  const [ userEmail, setuserEmail ] = useState("");
-  const [ userPassword, setuserPassword ] = useState("");
-  const [errorResponse, setErrorResponse] = useState("");
+export default function Signin() {
+  const { register, handleSubmit } = useForm();
+  const { signin, isAuthenticated, error } = useAuth() as AuthContextType;
+  const [ localError, setLocalError] = useState<AuthResponseError | null>(null);
+  const navigate = useNavigate()
 
-  const auth = useAuth()
-  const goTo = useNavigate()
-
-  async function handler(e: React.FormEvent<HTMLFormElement>){
-    e.preventDefault();
-    try {
-      const response = await fetch(`${ApiURL}/login`,{
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-            body: JSON.stringify({
-              userEmail,
-              userPassword,
-            })
-        })
-
-      if (response.ok) {
-        console.log('user created successfull');
-        setErrorResponse("")
-        goTo("/")
-      }else{
-        console.log('something went wrong');
-        const json = (await response.json()) as AuthResponseError;
-        setErrorResponse(json.body.error);
-        return;
-      }
-
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/home');
     }
-  }
+  }, [isAuthenticated, navigate]);
 
-
-  if (auth && auth.isAuthenticated) {
-    return <Navigate to={'/dashboard'} />
-  }
+  const onSubmit = handleSubmit(async (values) => {
+    try {
+      await signin(values);
+    } catch (error) {
+      setLocalError({ body: { error: 'Error during signup' } });
+      console.error("Error during signup", error);    
+    }
+  })
 
   return (
     <>
@@ -57,22 +35,25 @@ export default function Login() {
               Iniciar sesión
             </h2>
             <div>
-            {!! errorResponse &&
-              <p className='block text-sm font-medium leading-6 text-red-400 errorMessage bg-red-100 p-4 mt-3 rounded-md border-l-4 border-red-500'>{errorResponse}</p>
-            }
+              { localError && (
+                <p className='block text-sm font-medium leading-6 text-red-400 errorMessage bg-red-100 p-4 mt-3 rounded-md border-l-4 border-red-500'>
+                  {localError.body.error}
+                </p>)
+              } 
+              {!!error && 
+                <p className="block text-sm font-medium leading-6 text-red-400 errorMessage bg-red-100 p-4 mt-3 rounded-md border-l-4 border-red-500">{error.body.error}</p>
+              }
             </div>
             <div className="mt-8">
-              <form className="space-y-6" onSubmit={handler}>
+              <form className="space-y-6"  onSubmit={onSubmit} >
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-400">Correo electrónico</label>
                   <div className="mt-2">
                     <input 
-                      id="userEmail" 
-                      name="userEmail" 
+                      id="email" 
                       type="email" 
                       autoComplete="email" 
-                      value={userEmail} 
-                      onChange={(e) => setuserEmail(e.target.value)}  
+                      {...register("email", {required: true})}
                       className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
                 </div>
@@ -86,12 +67,10 @@ export default function Login() {
                   </div>
                   <div className="mt-2">
                     <input 
-                      id="userPassword" 
-                      name="userPassword" 
+                      id="password" 
                       type="password" 
                       autoComplete="current-password" 
-                      value={userPassword}  
-                      onChange={(e) => setuserPassword(e.target.value)}
+                      {...register("password", {required: true})}
                       className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
                 </div>
@@ -102,7 +81,7 @@ export default function Login() {
                   </button>
                   <p className="mt-10 text-center text-sm text-gray-500">
                     No te has registrado? 
-                    <a href="/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                    <a href="/register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                       Registrarse
                     </a>
                   </p>

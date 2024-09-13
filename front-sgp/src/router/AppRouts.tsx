@@ -1,19 +1,23 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./Login";
-import Signup from "./Signup";
+import Signup from "../pages/SignupPage";
 import Dashboard from "./Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
-import AuthProvider from "../Auth/AuthProvider";
-import Home from "../pages/Home";
+import { AuthProvider } from "../context/AuthContext";
+import Home from "../pages/HomePage";
+import Signin from "../pages/LoginPage";
+import Proyects from "../pages/ProyectsPage";
+import Files from "../pages/FilesPage";
+import Settings from "../pages/SettingsPage";
+import UserP from "../pages/UserPage";
 
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Login />,
+    path: "/login",
+    element: <Signin />,
   },
   {
-    path: "/signup",
+    path: "/register",
     element: <Signup />,
   },
   {
@@ -28,6 +32,22 @@ const router = createBrowserRouter([
         path: "/home",
         element: <Home />,
       },
+      {
+        path: "/proyects",
+        element: <Proyects/>
+      },
+      {
+        path: "/files",
+        element: <Files/>
+      },
+      {
+        path: "/settings",
+        element: <Settings/>
+      },
+      {
+        path: "/user",
+        element: <UserP/>
+      }
     ],
   },
 ]);

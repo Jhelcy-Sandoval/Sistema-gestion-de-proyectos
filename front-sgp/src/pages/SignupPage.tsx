@@ -1,54 +1,23 @@
-import React, { useState } from 'react'
-import { useAuth } from '../Auth/AuthProvider';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { ApiURL } from '../Auth/constants';
-import { AuthResponseError } from '../types/types';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useAuth } from '../context/AuthContext';
+import { AuthContextType, AuthResponseError } from '../types/types';
+import { useNavigate } from 'react-router-dom';
 
 export default function Signup () {
-  const [userName, setuserName] = useState("");
-  const [userEmail, setuserEmail] = useState("");
-  const [userPassword, setuserPassword] = useState("");
-  const [errorResponse, setErrorResponse] = useState("");
+  const { register, handleSubmit} = useForm();
+  const { signup, error} = useAuth() as AuthContextType;
+  const [ localError, setLocalError] = useState<AuthResponseError | null>(null);
+  const navigate = useNavigate();
 
-  const auth = useAuth()
-  const goTo = useNavigate()
-
-  async function handler(e: React.FormEvent<HTMLFormElement>){
-    e.preventDefault();
+  const onSubmit= handleSubmit( async (values) => {
     try {
-      const response = await fetch(`${ApiURL}/signup`,{
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-            body: JSON.stringify({
-              userName,
-              userEmail,
-              userPassword,
-            })
-        })
-
-      if (response.ok) {
-        console.log('user created successfull');
-        setErrorResponse("")
-        goTo("/")
-      }else{
-        console.log('something went wrong');
-        const json = (await response.json()) as AuthResponseError;
-        setErrorResponse(json.body.error);
-        console.log(json.body.error);
-        
-        return;
-      }
-
+      await signup(values);
+      navigate('/login');
     } catch (error) {
-      console.log(error);
-    }
-  }
-
-  if (auth.isAuthenticated) {
-    return <Navigate to={'/dashboard'} />
-  }
+      setLocalError({ body: { error: 'Error during signup' } });
+      console.error("Error during signup", error);    }
+  })
 
   return (
     <>
@@ -59,24 +28,27 @@ export default function Signup () {
             <h2 className="mt-8 text-center text-2xl font-bold leading-9 tracking-tight">
               Registrarse
             </h2>
-            <div >
-            {!! errorResponse &&
-              <p className='block text-sm font-medium leading-6 text-red-400 errorMessage bg-red-100 p-4 mt-3 rounded-md border-l-4 border-red-500'>{errorResponse}</p>
-            }
+            <div>
+              { localError && (
+                <p className='block text-sm font-medium leading-6 text-red-400 errorMessage bg-red-100 p-4 mt-3 rounded-md border-l-4 border-red-500'>
+                  {localError.body.error}
+                </p>)
+              } 
+              {!!error && 
+                <p className="block text-sm font-medium leading-6 text-red-400 errorMessage bg-red-100 p-4 mt-3 rounded-md border-l-4 border-red-500">{error.body.error}</p>
+              }
             </div>
             <div className="mt-8">
-              <form className="space-y-6" onSubmit={handler}>
+              <form className="space-y-6" onSubmit={onSubmit}>
               <div>
                   <label 
                     htmlFor="userName" className="block text-sm font-medium leading-6 text-gray-400">Nombre</label>
                   <div className="mt-2">
                     <input 
-                      id="Name" 
-                      name="name" 
+                      id="userName" 
                       type="text" 
                       autoComplete="name" 
-                      value={userName} 
-                      onChange={(e) => setuserName(e.target.value)} 
+                      {...register("userName", {required: true})}
                       className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
                 </div>
@@ -85,12 +57,10 @@ export default function Signup () {
                   <label htmlFor="userEmail" className="block text-sm font-medium leading-6 text-gray-400">Correo electrónico</label>
                   <div className="mt-2">
                     <input 
-                      id="userEmail" 
-                      name="userEmail" 
+                      id="email" 
                       type="email" 
                       autoComplete="email" 
-                      value={userEmail} 
-                      onChange={(e) => setuserEmail(e.target.value)}
+                      {...register("email", {required: true})}
                       className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"  />
                   </div>
                 </div>
@@ -101,12 +71,10 @@ export default function Signup () {
                   </div>
                   <div className="mt-2">
                     <input 
-                      id="userPassword" 
-                      name="userPassword" 
+                      id="password" 
                       type="password" 
                       autoComplete="current-password" 
-                      value={userPassword} 
-                      onChange={(e) => setuserPassword(e.target.value)}
+                      {...register("password", {required: true})}
                       className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-import Sidebar from "./Sidebar";
+import Sidebar from "../components/Sidebar";
 
 interface DefaultLayoutProps {
   children: React.ReactNode
@@ -7,10 +7,16 @@ interface DefaultLayoutProps {
 export default function DefaultLayout ({children}: DefaultLayoutProps){
   return (
     <>
-      <Sidebar />
-      <main>
-        { children }
-      </main>
+      <div className="flex flex-row">
+        <section className="boxe basis-1/6">
+          <Sidebar />
+        </section>
+        <section className="content basis-full">
+          <main>
+            { children }
+          </main>
+        </section>
+      </div>
     </>
   )
 }
