@@ -11,11 +11,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
   const [isLogin, setIslogin] = useState<any>(null);
   const [error, setError] = useState<AuthResponseError | null>(null)
 
-  const signup = async (user:User) => {
+  const signup = async (user: User) => {
     try {
       const response = await Register(user);  
       setUser(response.data); 
-      console.log(user);
+      console.log(user); 
+  
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response) {
         const errorMessage = error.response.data.message || 'Ocurrió un error desconocido';
@@ -24,8 +25,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         setError({ body: { error: 'Ocurrió un error desconocido' } });
       }
     }
-  } 
-
+  };
+  
   const signin = async (user: User) => {
     try {
       const response = await Login(user); 

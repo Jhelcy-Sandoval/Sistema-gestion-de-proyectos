@@ -20,7 +20,7 @@ export default function Signin() {
     try {
       await signin(values);
     } catch (error) {
-      setLocalError({ body: { error: 'Error during signup' } });
+      setLocalError({ body: { error: 'Error during signup' }});
       console.error("Error during signup", error);    
     }
   })
@@ -62,7 +62,7 @@ export default function Signin() {
                   <div className="flex items-center justify-between">
                     <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-400">Contraseña</label>
                     <div className="text-sm">
-                      <a href="#" className="font-semibold text-[#0d6efd] hover:text-indigo-500">Olvidé la contraseña?</a>
+                      <a href="/forgot" className="font-semibold text-[#0d6efd] hover:text-indigo-500">Olvidé la contraseña?</a>
                     </div>
                   </div>
                   <div className="mt-2">

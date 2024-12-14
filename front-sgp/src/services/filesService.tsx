@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { ApiURL } from '../Auth/constants';
-import { useAuth } from '../context/AuthContext';
 
 export const fileToBase64 = (file: Blob): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -13,9 +12,13 @@ export const fileToBase64 = (file: Blob): Promise<string> => {
   });
 };
 
-export const fileService = async (fileData: { nombre: string; tipo: string; data: string }) => {
+export const fileService = async (fileData:{ nombre: string, tipo: string, data: string, user: string, projectID:string, taskID: string}, token:string) => {
   try {
-    const response = await axios.post(`${ApiURL}/files`, fileData);
+    const response = await axios.post(`${ApiURL}/files`, fileData, {
+      headers: {
+        'x-access-token': token,
+      }
+    });
     return response.data;
   } catch (error) {
     console.error('Error en el registro:', error);
@@ -24,7 +27,7 @@ export const fileService = async (fileData: { nombre: string; tipo: string; data
 };
 
 export const getoneFile = async(fileName: string) => {
-  try {
+  try {    
     const response = await axios.get(`${ApiURL}/files/${fileName}`)
     return response
   } catch(error) {
@@ -33,15 +36,44 @@ export const getoneFile = async(fileName: string) => {
   }
 }
 
-export const getFiles = async(token: string) => {
+export const getFiles = async (token: string, userID: string) => {
   try {
-    const response = await axios.get(`${ApiURL}/files`, {
+    const response = await axios.get(`${ApiURL}/files/${userID}`, {
       headers: {
         'x-access-token': token,
       },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching files:', error);
+    throw error;
+  }
+};
+
+export const deleteFile =async (fileID: string, token: string) => {
+  try {
+    const response = await axios.delete(`${ApiURL}/files/${fileID}`,{
+      headers: {
+        'x-access-token': token,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching files:', error);
+    throw error;
+  }
+}
+
+export const updateFile = async(fileID:string , formData:any, token:string) => {
+  try {
+    const response = await axios.patch(`${ApiURL}/files/${fileID}`, formData, {
+      headers: {
+        'x-access-token': token,
+      }
     })
     return response.data
   } catch (error) {
-    
+    console.error('Error en el update:', error);
+    throw error;
   }
 }

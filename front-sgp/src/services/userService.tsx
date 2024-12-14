@@ -1,6 +1,17 @@
 import axios from "axios"
 import { ApiURL } from "../Auth/constants"
 
+export const fotoToBase64 = (foto: Blob): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      resolve(reader.result as string);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(foto); 
+  });
+};
+
 export const getOneUser = async(userData: string, token: string) => {
   try {
     const response = await axios.get(`${ApiURL}/user/${userData}`, {

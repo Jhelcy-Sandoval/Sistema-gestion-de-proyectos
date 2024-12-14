@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { getOneUser } from "../services/userService";
-import { User } from "../types/types";
+import { Roles, User } from "../types/types";
 import { useAuth } from "../context/AuthContext";
+import { getOneRole } from "../services/RoleService";
 
 interface CustomJwtPayload extends JwtPayload {
   id: string; 
 }
 
-export default function useUserData() {
+export default function useUserData( refresh: boolean) {
   const [userData, setUserData] = useState<CustomJwtPayload | undefined>(undefined);
   const [userget, setUserget] = useState<User | null>(null);
   const [userID, setUserID] = useState<string>('');
+  const [getRole, setgetRole] = useState<Roles | undefined>(undefined);
+  const [roleget, setRole] = useState<object | undefined>(undefined)
+  const [hasFetchedRole, setHasFetchedRole] = useState(false);
   const {isLogin, user} = useAuth();
 
   useEffect(() => {
@@ -53,7 +57,30 @@ export default function useUserData() {
     if (userData) {
       fetchUser(); 
     }
-  }, [userData, isLogin]);
+  }, [userData, isLogin, refresh]);
+  
+  useEffect(() => {
+    if (!userget) return; 
+  
+    const role = userget?.rol?.[0]; 
+    setRole(role);
+  
+    const fetchRole = async () => {
+      try {
+        const userRole = await getOneRole(roleget ?? '', isLogin); 
+        setgetRole(userRole);
+      } catch (error) {
+        console.error("Error fetching role:", error);
+      } finally {
+        setHasFetchedRole(true);
+      }
+    };
+  
+    if (roleget && !hasFetchedRole) {
+      fetchRole();
+    }
+  }, [userget, roleget, isLogin, hasFetchedRole]);
+  
 
-  return { userData, userget, userID };
+  return { userData, userget, userID, roleget, getRole };
 }

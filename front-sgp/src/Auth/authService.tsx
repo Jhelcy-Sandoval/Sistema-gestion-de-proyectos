@@ -2,6 +2,7 @@ import axios from 'axios';
 import { ApiURL } from './constants'
 import { User } from '../types/types'
 
+
 export const Register = async (user:User) => {
    try {
     const response = await axios.post(`${ApiURL}/auth/signup`, user);

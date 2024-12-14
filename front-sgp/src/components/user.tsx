@@ -4,22 +4,20 @@ import { updateUser } from "../services/userService";
 import { useAuth } from "../context/AuthContext";
 import { AuthResponseError } from "../types/types";
 import { useState } from "react";
-import useRole from "../hooks/roleHook";
+import { useNavigate } from "react-router-dom";
 
 export default function UserAboutme (){
-  const {userget, userID} = useUserData();
+  const {userget, userID, getRole} = useUserData(true);
   const {register, handleSubmit} = useForm();
   const {isLogin} = useAuth();
-  const {getRole, setRole, setHasFetchedRole} = useRole(); 
-  const [ localError, setLocalError] = useState<AuthResponseError | null>(null);
-
+ const [ localError, setLocalError] = useState<AuthResponseError | null>(null);
+  const navigate = useNavigate();
 
   const onSubmit = async (data:any) => {
     const formData = data;
     try {
       await updateUser(userID, formData, isLogin);
-      setRole(undefined); 
-      setHasFetchedRole(false);
+      navigate('/home')
     } catch (error) {
       console.error("Error updating user:", error);
       setLocalError({ body: { error: 'Error updating user' } });
@@ -73,6 +71,16 @@ export default function UserAboutme (){
                 <p>Email</p>
               )}
             </div>
+            <div>
+              <h5>Rol</h5>
+              {typeof getRole?.name === 'string' ? (
+                <p className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+                  {getRole?.name}
+                </p>
+              ) : (
+                <p className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">User</p>
+              )}
+            </div>
             <div className="flex justify-end py-2">
               <button type="submit" className="rounded-md bg-[#0d6efd] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                 Actualizar
@@ -114,6 +122,16 @@ export default function UserAboutme (){
                 />
               ) : (
                 <p>Email</p>
+              )}
+            </div>
+            <div>
+              <h5>Rol</h5>
+              {typeof getRole?.name === 'string' ? (
+                <p className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+                  {getRole?.name}
+                </p>
+              ) : (
+                <p className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">User</p>
               )}
             </div>
           </>

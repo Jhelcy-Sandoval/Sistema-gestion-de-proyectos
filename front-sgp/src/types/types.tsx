@@ -14,18 +14,27 @@ export interface AuthResponseError {
   }
 }
 
+export interface ResponseError {
+  message: string; 
+}
+
 export interface User {
   userName: {
-    type: String,
+    type: string,
     unique: true
   },
   email:{
-    type: String,
+    type: string,
     unique: true
   },
   password:{
-    type: String,
+    type: string,
     require: true
+  },
+  foto: {
+    nombre: { type: string, required: true },
+    data: { type: string, required: true }, 
+    type: { type: string, required: true }
   },
   rol: Array<{
     ref: Roles;
@@ -64,9 +73,58 @@ export interface File {
   data: {
     type: string;
   };
+  user:{
+    type: string
+  };
+  projectID: {
+    type: string
+  };
+  taskID:{
+    type: string
+  };
 }
 
-interface JwtPayload {
-  id: string;
-  name: string;
+export interface Projects {
+  nombre: string,
+  objetivo: string,
+  alcance: string,
+  _id: string
+}
+
+type Prioridad = 'baja' | 'media' | 'alta';
+type Estado = 'pendiente' | 'en progreso' | 'completado' | 'bloqueada';
+
+export interface Comentario {
+  autor: string;
+  mensaje: string;
+  fecha: Date;
+}
+
+export interface Task {
+  Título: string;               
+  Descripción?: string;          
+  Categoría: string[];        
+  Responsable?: string;          
+  projectID: string;     
+  userID: string;        
+  Prioridad: Prioridad;           
+  FechaInicio: Date;              
+  FechaVencimiento: Date;         
+  Estado: Estado;                
+  Progreso: number;               
+  Comentarios?: Comentario[];
+  _id: string;     
+}
+
+export interface SubTask {
+  name: string,
+  hecho: boolean,
+  taskID:string,
+  _id: string
+}
+
+export interface Categoria {
+  name: string,
+  _id: string,
+  userID: string
 }
