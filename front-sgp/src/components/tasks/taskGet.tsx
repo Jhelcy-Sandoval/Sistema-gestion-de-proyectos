@@ -194,7 +194,7 @@ export default function TaskGet ({showTask, onTaskSelect, getProjectID}:TaskProp
                   onClick={() => onTaskSelect(undefined)}
                 >
                   <div className="bg-[#0d6efd] rounded-md w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-24 duration-500">
-                    <img src="../../../public/atras.svg" alt="atras" />
+                    <img src="/atras.svg" alt="atras" />
                   </div>
                   <p className="translate-x-2">Atras</p>
                 </button>

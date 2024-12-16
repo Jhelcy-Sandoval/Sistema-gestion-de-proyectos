@@ -74,7 +74,7 @@ export default function FilesModel({ onToggle, onFileUploaded, refreshed}: Files
         <div className="flex p-3 justify-between">
           <h1 className="font-bold text-2xl text-wrap w-full">Form new file</h1>
           <button className="flex align-top inline-block text-left w-1/12	" onClick={onToggle}>
-            <img src="../../public/close-x-svgrepo-com.svg" alt="close icon" />
+            <img src="/close-x-svgrepo-com.svg" alt="close icon" />
           </button>
         </div>
         <div className=" sm:container md:mx-auto justify-center  bg-[#001321] p-2">

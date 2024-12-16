@@ -16,7 +16,7 @@ export default function ActiveProjects (){
             .map((project, index) => (
               <div key={index} className="cursor-pointer" onClick={() => navigate('/projects')}>
                 <div className="w-24">
-                  <img src="../../../public/carpeta.svg" alt="" />
+                  <img src="/carpeta.svg" alt="" />
                 </div>
                   <p className="text-gray-600 font-bold">{project.nombre}</p>
               </div>

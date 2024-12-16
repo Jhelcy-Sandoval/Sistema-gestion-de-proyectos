@@ -139,7 +139,7 @@ export default function ProjectsCards({ onToggle, refreshed, onSelectProject }: 
                         className="flex items-center inline-block min-w-8 relative cursor-pointer"
                         onClick={() => handleDropdownToggle(index)}
                       >
-                        <img src="../../../public/options.svg" alt="menu" />
+                        <img src="/options.svg" alt="menu" />
                         {activeDropdown === index && (
                           <div className="absolute mt-28 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-20">
                             <div className="py-1">

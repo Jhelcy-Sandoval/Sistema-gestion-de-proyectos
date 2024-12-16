@@ -24,7 +24,7 @@ export default function Signup () {
       <div className="content md:container md:mx-auto justify-center flex box-border">
         <div className="p-6 mt-8 md:w-1/2 flex content-center">
           <div className="sm:mx-auto sm:my-auto sm:w-full sm:max-w-sm ">
-            <img className="mx-auto max-w-24 " src="../../public/logo.webp" alt="logo" />
+            <img className="mx-auto max-w-24 " src="/logo.webp" alt="logo" />
             <h2 className="mt-8 text-center text-2xl font-bold leading-9 tracking-tight">
               Registrarse
             </h2>

@@ -58,7 +58,7 @@ export default function UserP () {
                 alt={`${userget?.foto.nombre}`} 
               />
               <div className="w-full h-full bg-white rounded-full absolute top-0 left-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-70">
-                <img src="../../public/subir-archivo.svg" alt="icono de subir archivo" />
+                <img src="/subir-archivo.svg" alt="icono de subir archivo" />
               </div>
             </button>
             <div className="p-4 ">

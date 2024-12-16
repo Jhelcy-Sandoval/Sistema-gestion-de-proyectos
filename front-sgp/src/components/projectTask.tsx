@@ -123,16 +123,16 @@ export default function ProjectTask({ oneProject, refresh, onTaskSelect}: Projec
                 <div className="flex space-x-2">
                   <button className="w-4" onClick={() => handleDropdownToggle(categoriaIndex)}>
                     {activeDropdown === categoriaIndex ? (
-                      <img src="../../../public/flecha-hacia-arriba.svg" alt="close"/>
+                      <img src="/flecha-hacia-arriba.svg" alt="close"/>
                     ) : (
-                      <img src="../../../public/open-dropdown.svg" alt="menu" />
+                      <img src="/open-dropdown.svg" alt="menu" />
                     )}
                   </button>
                   <button className="w-4">
-                    <img src="../../../public/mas.svg" alt="add task" onClick={() => openModal(categoria)}/>
+                    <img src="/mas.svg" alt="add task" onClick={() => openModal(categoria)}/>
                   </button>
                   <button className="w-4"  onClick={() => openModalAlert(categoria)} >
-                    <img src="../../../public/basura.svg" alt="basura" />
+                    <img src="/basura.svg" alt="basura" />
                   </button>
                 </div>
               </div>
