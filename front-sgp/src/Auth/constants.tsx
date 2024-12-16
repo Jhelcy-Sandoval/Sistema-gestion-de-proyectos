@@ -1,1 +1,1 @@
-export const ApiURL = "http://localhost:3000/api";
+export const ApiURL = "https://apisgp.netlify.app/api";
