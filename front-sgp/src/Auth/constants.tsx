@@ -1,1 +1,1 @@
-export const ApiURL = "https://apisgp.netlify.app/api";
+export const ApiURL = "https://api-sgp-slij.onrender.com";
