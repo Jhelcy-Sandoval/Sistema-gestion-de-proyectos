@@ -1,1 +1,1 @@
-export const ApiURL = "https://api-sgp-slij.onrender.com/api";
+export const ApiURL = "https://api-sgp-slij.onrender.com";
