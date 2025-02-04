@@ -22,10 +22,8 @@ export default function TaskForm ({onToggle, oneProject}:TaskFetchProps) {
         projectID: getProjectID, 
         userID: userID
       }
-      console.log(dataForm);
       
-      const createCategorie = await createCategories(dataForm, isLogin);
-      console.log(createCategorie);
+       await createCategories(dataForm, isLogin);
       onToggle();
       reset();
     } catch (error) {

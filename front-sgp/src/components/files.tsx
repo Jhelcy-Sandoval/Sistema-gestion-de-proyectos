@@ -59,9 +59,8 @@ export default function FilesFetch({ onToggle, refreshed }: FilesFetchProps){
     try {
       const fileID = fileuse?._id; 
       if (fileID){
-        const  patchFile = await updateFile(fileID, data, isLogin)
+        await updateFile(fileID, data, isLogin)
         setRefresh(!refresh);
-        console.log(patchFile);
         setIsOpen(false)
       } else {
         console.log('error file is required');      
@@ -75,8 +74,7 @@ export default function FilesFetch({ onToggle, refreshed }: FilesFetchProps){
     try {
       const fileID = fileuse?._id; 
       if(fileID){
-        const dropFile = await deleteFile(fileID, isLogin);
-        console.log(dropFile);
+        await deleteFile(fileID, isLogin);
         setIsOpenAlert(false)      
         setFiles(filesget.filter(f => f._id !== fileID));
         setRefresh(!refresh);

@@ -34,8 +34,7 @@ export default function UserP () {
             data: base64Data     
           }
         }; 
-        const response = await updateUser(userID, fotoData, isLogin);
-        console.log(response);
+        await updateUser(userID, fotoData, isLogin);
       }
       setRefresh(!refresh);
       closeModal(); 

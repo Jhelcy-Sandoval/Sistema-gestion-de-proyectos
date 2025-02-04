@@ -94,9 +94,7 @@ export default function ProjectTask({ oneProject, refresh, onTaskSelect}: Projec
         userID: userID 
       };
   
-      const response = await createNewTask(dataForm, isLogin);
-      console.log("Tarea creada:", response);
-      
+      await createNewTask(dataForm, isLogin);      
       setIsOpen(false);
       reset();
       setRefreshed(!refresh);

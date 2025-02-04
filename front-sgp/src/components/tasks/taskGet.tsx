@@ -119,7 +119,6 @@ export default function TaskGet ({showTask, onTaskSelect, getProjectID}:TaskProp
         };
     
         await updateTask(taskID, formTask, isLogin);
-        console.log("Estado actualizado correctamente:", formTask);
       } catch (error) {
         console.error("Error actualizando el estado de la tarea:", error);    
       }

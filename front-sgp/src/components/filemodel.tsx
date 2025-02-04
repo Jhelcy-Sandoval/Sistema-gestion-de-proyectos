@@ -38,7 +38,6 @@ export default function FilesModel({ onToggle, onFileUploaded, refreshed}: Files
   
   useEffect(() => {
     if (selectedProject) {
-      console.log(selectedProject);
       setProjectID(selectedProject)
     } 
   }, [selectedProject, tasks]);

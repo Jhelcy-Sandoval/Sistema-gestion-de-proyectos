@@ -13,7 +13,6 @@ export default function DateProject() {
     const fetchTask = async () => {
       try {
         const response = await getTask(isLogin);
-        console.log('Tareas obtenidas:', response);
         setTasks(response);
       } catch (error) {
         console.error('Error fetching files:', error);

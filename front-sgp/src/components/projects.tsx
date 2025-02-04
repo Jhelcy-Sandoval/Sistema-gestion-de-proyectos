@@ -13,7 +13,6 @@ interface ProjectsFetchProps {
   
     const handleSelectProject = (projectId: string) => {
       setSelectedProject(projectId);
-      console.log(projectId); 
     }
 
     return (

@@ -84,13 +84,10 @@ export default function ProjectGet({
 
   const handleTaskSelect = (task: Task | undefined) => {
     setSelectedTask(task);
-    console.log(selectedTask);
   };
 
   const handleTaskClose = (task:undefined) => {
-    setSelectedTask(task)
-    console.log(selectedTask);
-    
+    setSelectedTask(task)    
   }
 
   return (

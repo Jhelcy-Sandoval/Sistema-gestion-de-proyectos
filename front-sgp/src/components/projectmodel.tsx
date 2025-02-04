@@ -47,10 +47,8 @@ export default function ProjectModel ({ onToggle, onProjectUploaded  }: Projects
           promedio: 0
         }
         const response = await createProject(fileData, isLogin);
-        console.log(response);
         onToggle();
         setMessage(response.message)
-        console.log('Respuesta del servidor:', response);
         onProjectUploaded(); 
       }
     } catch (err) {
