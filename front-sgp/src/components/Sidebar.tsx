@@ -38,7 +38,7 @@ export default function Sidebar (){
               <div>
                 <div className="flex items-center justify-center content-center overflow-hidden relative group aspect-square rounded-full w-12">
                   <img 
-                    src={typeof userget?.foto.data === 'string' ? userget.foto.data : "../../public/logo.webp"}
+                    src={typeof userget?.foto.data === 'string' ? userget.foto.data : "/logo.webp"}
                     alt="User profile" 
                     className=" object-cover rounded-full" 
                   />
@@ -86,7 +86,7 @@ export default function Sidebar (){
             <button 
               className={`p-2 w-full colorFondo text-left my-2 hover:rounded-lg focus:rounded-lg grid grid-cols-2 gap-1 ${activeButton === 'settings' ? 'outline outline-offset-2 outline-1 rounded-lg' : ''}`}
               onClick={handleExit}>
-              <img className="w-10" src="../../public/cerrar-sesion.svg" alt="cerrar sesion" />
+              <img className="w-10" src="/cerrar-sesion.svg" alt="cerrar sesion" />
               Log out
             </button>
           </nav>

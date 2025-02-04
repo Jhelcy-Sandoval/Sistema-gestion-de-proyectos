@@ -250,7 +250,7 @@ export default function TaskGet ({showTask, onTaskSelect, getProjectID}:TaskProp
                             </div>
                             <div>
                               <button className="w-4" >
-                                <img src="../../../public/mas.svg" alt="add file" onClick={openModalFile}/>
+                                <img src="/mas.svg" alt="add file" onClick={openModalFile}/>
                               </button>
                             </div>
                           </div>
@@ -277,10 +277,10 @@ export default function TaskGet ({showTask, onTaskSelect, getProjectID}:TaskProp
                                       </div>
                                       <div>
                                         <button className="w-4">
-                                          <img src="../../../public/lapiz.svg" alt="edit file" onClick={() => openModalFileEdite(file)}/>
+                                          <img src="/lapiz.svg" alt="edit file" onClick={() => openModalFileEdite(file)}/>
                                         </button>
                                         <button className="w-4"  onClick={() => openModalFileDrop(file)} >
-                                          <img src="../../../public/basura.svg" alt="basura" />
+                                          <img src="/basura.svg" alt="basura" />
                                         </button>
                                       </div>
                                     </div>
@@ -299,7 +299,7 @@ export default function TaskGet ({showTask, onTaskSelect, getProjectID}:TaskProp
                           </div>
                           <div>
                             <button className="w-4">
-                              <img src="../../../public/mas.svg" alt="add task" onClick={() => openModal()}/>
+                              <img src="/mas.svg" alt="add task" onClick={() => openModal()}/>
                             </button>
                           </div>
                         </div>
@@ -313,13 +313,13 @@ export default function TaskGet ({showTask, onTaskSelect, getProjectID}:TaskProp
                               <div className="space-x-2">
                                 <button className="w-4" onClick={() => chequed(subtask)}>
                                   {subtask.hecho === false ? ( 
-                                    <img src="../../../public/exclamacion.svg" alt="tarea no realizada" />
+                                    <img src="/exclamacion.svg" alt="tarea no realizada" />
                                   ):(
-                                    <img src="../../../public/cheque.svg" alt="tarea realizada" />
+                                    <img src="/cheque.svg" alt="tarea realizada" />
                                   )}
                                 </button>
                                 <button className="w-4"  onClick={() => openModalAlert(subtask)} >
-                                  <img src="../../../public/basura.svg" alt="basura" />
+                                  <img src="/basura.svg" alt="basura" />
                                 </button>
                               </div>
                             </div>

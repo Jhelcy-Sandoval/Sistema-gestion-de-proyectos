@@ -109,7 +109,7 @@ export default function FilesFetch({ onToggle, refreshed }: FilesFetchProps){
                     </div>
                   ) : (
                     <a href={`${file.data}`} download={file.nombre}>
-                      <img className="max-w-full max-h-full object-contain" src="../../public/descarga.png" alt="" />                      
+                      <img className="max-w-full max-h-full object-contain" src="/descarga.png" alt="" />                      
                     </a>
                   )}
                 </div>
@@ -122,7 +122,7 @@ export default function FilesFetch({ onToggle, refreshed }: FilesFetchProps){
                     className="flex align-top inline-block text-left min-w-8 relative "
                     onClick={() => handleDropdownToggle(index)}
                   >
-                    <img  src="../../../public/options.svg" alt="menu" />               
+                    <img  src="/options.svg" alt="menu" />               
                   {activeDropdown === index && (
                       <div className="absolute mt-4 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-20">
                         <div className="py-1">

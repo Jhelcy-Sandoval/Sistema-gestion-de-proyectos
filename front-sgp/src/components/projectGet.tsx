@@ -108,12 +108,12 @@ export default function ProjectGet({
                   alt={`${oneProject.imgProject.nombre}`} 
                 />
                 <div className="w-full h-full bg-white rounded-full absolute top-0 left-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-70">
-                  <img src="../../public/subir-archivo.svg" alt="icono de subir archivo" />
+                  <img src="/subir-archivo.svg" alt="icono de subir archivo" />
                 </div>
             </button>
             ) : (
               <div className="flex items-center justify-center h-full text-white">
-                <img className="rounded-full" src="../../public/logo.webp" alt="foto user" />
+                <img className="rounded-full" src="/logo.webp" alt="foto user" />
               </div>
             )}
             {isOpen && (
@@ -193,7 +193,7 @@ export default function ProjectGet({
                             onClick={closeToggle}
                           >
                             <div className="bg-[#0d6efd] rounded-md w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-24 duration-500">
-                              <img src="../../public/atras.svg" alt="atras" />
+                              <img src="/atras.svg" alt="atras" />
                             </div>
                             <p className="translate-x-2">Atras</p>
                           </button>

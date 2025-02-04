@@ -277,7 +277,7 @@ export default function ProjectTask({ oneProject, refresh, onTaskSelect}: Projec
                             </div>
                             <div>
                               <button className="w-4"  onClick={() => openModalDelete(task)} >
-                                <img src="../../../public/basura.svg" alt="basura" />
+                                <img src="/basura.svg" alt="basura" />
                               </button>
                             </div>
                           </div>
