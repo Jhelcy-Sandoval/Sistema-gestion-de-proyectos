@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { SubTask, TaskStatus } from "../types/types";
-import { getSubTask } from "../services/subTaskService";
+import { getAllSubTask, getSubTask } from "../services/subTaskService";
 
 export default function useSubTask(
   refreshed: boolean,
   taskID?: string | undefined,
+  userID?: string | undefined,
 ) {
   const [getSubtask, setSubTask] = useState<SubTask[]>([]);
+  const [getAllSubtask, setAllSubTask] = useState<SubTask[]>([]);
   const { isLogin } = useAuth();
   const [estado, setEstado] = useState<TaskStatus>("todo");
   const [progreso, setProgreso] = useState<number>();
@@ -20,7 +22,7 @@ export default function useSubTask(
           setSubTask(response);
         }
       } catch (error) {
-        console.error("Error fetching files:", error);
+        console.error("Error fetching subtasks:", error);
       }
     };
 
@@ -28,6 +30,22 @@ export default function useSubTask(
       fetchSubTask();
     }
   }, [taskID, isLogin, refreshed]);
+
+  useEffect(() => {
+    const fetchAllSubtasks = async () => {
+      try {
+        if (!userID) return;
+        const response = await getAllSubTask(userID, isLogin);
+        setAllSubTask(response);
+      } catch (error) {
+        console.error("Error fetching all subtasks:", error);
+      }
+    };
+
+    if (isLogin && userID) {
+      fetchAllSubtasks();
+    }
+  }, [isLogin, userID]);
 
   useEffect(() => {
     if (getSubtask.length === 0) {
@@ -55,5 +73,5 @@ export default function useSubTask(
     }
   }, [getSubtask]);
 
-  return { getSubtask, estado, progreso };
+  return { getSubtask, estado, progreso, getAllSubtask };
 }
