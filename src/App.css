@@ -1,0 +1,24 @@
+.content {
+  background-color: var(--card-dark);
+  min-height: 100vh;
+}
+
+.boxe{
+  background-color: rgb(61, 70, 77);
+}
+
+.colorFondo:hover{
+  background-color: rgb(80, 89, 95);
+}
+
+.colorFondo:focus{
+  background-color: #001321b6;
+}
+
+.mode{
+  background-color: #000d16;
+}
+
+.model{
+  background-color: #000d16;
+}
