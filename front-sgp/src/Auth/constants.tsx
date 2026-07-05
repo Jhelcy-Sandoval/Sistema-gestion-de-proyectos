@@ -1,1 +1,0 @@
-export const ApiURL = "https://api-sgp-slij.onrender.com/api";
