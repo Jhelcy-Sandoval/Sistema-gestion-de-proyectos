@@ -8,36 +8,22 @@ import useUserData from "../hooks/userHooks";
 import useTask from "../hooks/taskHook";
 
 export default function MySpace() {
-  const { userID, userget } = useUserData(false, false);
-  const { mytasks } = useTask(false, false);
+  const { userget } = useUserData(false, false);
+  const { mytasks } = useTask(false, false, undefined, userget);
 
-  const myTasks = mytasks.filter((task) => {
-    if (!task.assignedTo) return false;
-
-    if (typeof task.assignedTo === "string") {
-      return task.assignedTo === userID;
-    }
-
-    return task.assignedTo._id === userID;
-  });
-
-  const completedTasks = myTasks.filter(
+  const completedTasks = mytasks.filter(
     (task) => task.status === "done"
   );
 
-  const pendingTasks = myTasks.filter(
+  const pendingTasks = mytasks.filter(
     (task) => task.status === "todo"
   );
 
-  const inProgressTasks = myTasks.filter(
+  const inProgressTasks = mytasks.filter(
     (task) =>
       task.status === "in_progress" ||
       task.status === "review"
   );
-
-  console.log("mis tareas", myTasks)
-  console.log("todas las tareas", mytasks)
-  console.log("mi id", userID)
 
   return (
     <section className="p-6 space-y-6">
@@ -56,27 +42,21 @@ export default function MySpace() {
             </span>
           </p>
         </div>
-
-        <button className="bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700">
-          + Nueva tarea
-        </button>
       </div>
-
-      {/* Resumen */}
 
       <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-4">
 
-        <div className="mode rounded-xl p-5 border-t-4 border-blue-500">
+        <div className="mode rounded-xl p-5 border-t-4 border-[--info]">
           <h2 className="text-gray-400">
             Mis tareas
           </h2>
 
           <p className="text-3xl font-bold mt-3">
-            {myTasks.length}
+            {mytasks.length}
           </p>
         </div>
 
-        <div className="mode rounded-xl p-5 border-t-4 border-green-500">
+        <div className="mode rounded-xl p-5 border-t-4 border-[--success]">
           <h2 className="text-gray-400">
             Completadas
           </h2>
@@ -86,7 +66,7 @@ export default function MySpace() {
           </p>
         </div>
 
-        <div className="mode rounded-xl p-5 border-t-4 border-red-500">
+        <div className="mode rounded-xl p-5 border-t-4 border-[--danger]">
           <h2 className="text-gray-400">
             Pendientes
           </h2>
@@ -96,7 +76,7 @@ export default function MySpace() {
           </p>
         </div>
 
-        <div className="mode rounded-xl p-5 border-t-4 border-yellow-500">
+        <div className="mode rounded-xl p-5 border-t-4 border-[--warning]">
           <h2 className="text-gray-400">
             En progreso
           </h2>
@@ -111,11 +91,11 @@ export default function MySpace() {
       <div className="grid xl:grid-cols-3 gap-6">
 
         <div className="xl:col-span-2 mode rounded-xl p-4">
-          <TaskList mytasks={myTasks}/>
+          <TaskList mytasks={mytasks}/>
         </div>
 
         <div className="mode rounded-xl p-4">
-          <Calendar mytasks={myTasks}/>
+          <Calendar mytasks={mytasks}/>
         </div>
 
       </div>
@@ -127,7 +107,7 @@ export default function MySpace() {
         </div>
 
         <div className="mode rounded-xl p-4">
-          <Workload mytasks={myTasks}/>
+          <Workload mytasks={mytasks}/>
         </div>
 
       </div>

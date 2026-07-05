@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getAllTask, getMyTask } from "../services/taskService";
+import { getAllTask, getMyTask, getTask } from "../services/taskService";
 import { useAuth } from "../context/AuthContext";
-import { Categoria, Task } from "../types/types";
+import { Categoria, Task, User } from "../types/types";
 import { getAllCategories } from "../services/categoriasService";
 import { updateProject } from "../services/projectsService";
 
@@ -9,7 +9,7 @@ export default function useTask(
   refresh: boolean,
   refreshed: boolean,
   projectID?: string,
-  userId?: string,
+  user?: User | null,
 ) {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [mytasks, setMyTasks] = useState<Task[]>([]);
@@ -37,18 +37,23 @@ export default function useTask(
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        if (!userId) return;
-        const response = await getMyTask(isLogin, userId);
-        setMyTasks(response);
+        if (!user) return;
+        if (user.role === "developer") {
+          const response = await getMyTask(isLogin, user._id);
+          setMyTasks(response);
+        } else {
+          const response = await getTask(isLogin, user._id);
+          setMyTasks(response);
+        }
       } catch (error) {
         console.error("Error fetching tasks:", error);
       }
     };
 
-    if (isLogin && userId) {
+    if (isLogin && user) {
       fetchTasks();
     }
-  }, [isLogin, refresh, refreshed, userId]);
+  }, [isLogin, refresh, refreshed, user]);
 
   useEffect(() => {
     const updateResume = async () => {

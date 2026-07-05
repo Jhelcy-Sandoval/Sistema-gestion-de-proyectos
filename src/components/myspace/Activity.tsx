@@ -2,8 +2,8 @@ import useSubTask from "../../hooks/subTaskHook";
 import useUserData from "../../hooks/userHooks";
 
 export default function Activity() {
-  const { getSubtask } = useSubTask(false);
   const { userID } = useUserData(false, false);
+  const { getAllSubtask } = useSubTask(false, undefined, userID);
 
   return (
     <div>
@@ -15,15 +15,14 @@ export default function Activity() {
         </p>
       </div>
 
-      {getSubtask.length === 0 ? (
+      {getAllSubtask.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-gray-400 mt-4">No hay actividad reciente.</p>
         </div>
       ) : (
         <div className="space-y-4">
-          {getSubtask && getSubtask.length > 0 ? (
-            getSubtask
-              .filter((subtask) => subtask.userId === userID)
+          {getAllSubtask && getAllSubtask.length > 0 ? (
+            getAllSubtask
               .map((subtask) => (
                 <div
                   key={subtask._id}

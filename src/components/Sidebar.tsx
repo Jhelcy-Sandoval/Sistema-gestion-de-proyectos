@@ -38,15 +38,15 @@ export default function Sidebar() {
             >
               <div>
                 <div className="flex items-center justify-center content-center overflow-hidden relative group aspect-square rounded-full w-12">
-                  <img
-                    src={
-                      typeof userget?.foto?.data === "string"
-                        ? userget.foto.data
-                        : "/logo.webp"
-                    }
-                    alt="User profile"
-                    className="object-cover rounded-full"
-                  />
+                  {userget?.foto?.data ? ( 
+                    <img
+                      src={`${userget?.foto?.data}`}
+                      alt="User profile"
+                      className="object-cover rounded-full"
+                    />
+                    ) : (
+                      <img src="/logo.webp" alt="default user image" className="object-cover rounded-full" />
+                    )}
                 </div>
               </div>
               <div className=" h-full flex items-center justify-center content-center ">

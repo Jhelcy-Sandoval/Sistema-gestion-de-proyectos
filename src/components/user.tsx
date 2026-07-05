@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function UserAboutme (){
-  const {userget, userID, getRole} = useUserData(true, false);
+  const {userget, userID} = useUserData(true, false);
   const {register, handleSubmit} = useForm();
   const {isLogin} = useAuth();
  const [ localError, setLocalError] = useState<AuthResponseError | null>(null);
@@ -34,7 +34,7 @@ export default function UserAboutme (){
               </p>
             )}
           </div>
-        {typeof getRole?.name === 'string' && getRole.name === 'admin' ? (
+        {typeof userget?.role === 'string' && userget.role === 'admin' ? (
           <form action="" onSubmit={handleSubmit(onSubmit)}>
             <h5>Nombre completo</h5>
             <div className="py-2">
@@ -73,9 +73,9 @@ export default function UserAboutme (){
             </div>
             <div>
               <h5>Rol</h5>
-              {typeof getRole?.name === 'string' ? (
+              {typeof userget.role === 'string' ? (
                 <p className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
-                  {getRole?.name}
+                  {userget.role}
                 </p>
               ) : (
                 <p className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">User</p>
@@ -126,9 +126,9 @@ export default function UserAboutme (){
             </div>
             <div>
               <h5>Rol</h5>
-              {typeof getRole?.name === 'string' ? (
+              {typeof userget?.role === 'string' ? (
                 <p className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
-                  {getRole?.name}
+                  {userget.role}
                 </p>
               ) : (
                 <p className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">User</p>
