@@ -67,47 +67,36 @@ export default function GraficoDos() {
 
   return (
     <div className="bg-[--card] border border-slate-200 rounded-xl p-5">
-
-      <h2 className="text-lg font-bold text-gray-700">
-        Estado de las tareas
-      </h2>
+      <h2 className="text-lg font-bold text-gray-700">Estado de las tareas</h2>
 
       <p className="text-gray-500 mb-4">
         Distribución de tus tareas según su estado actual.
       </p>
+      {tasks.length > 0 ? (
+        <div className="h-72">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
 
-      <div className="h-72">
+              <XAxis dataKey="estado" />
 
-        <ResponsiveContainer width="100%" height="100%">
+              <YAxis allowDecimals={false} />
 
-          <BarChart data={data}>
+              <Tooltip />
 
-            <CartesianGrid strokeDasharray="3 3" />
-
-            <XAxis dataKey="estado" />
-
-            <YAxis allowDecimals={false} />
-
-            <Tooltip />
-
-            <Bar
-              dataKey="tareas"
-              radius={[6, 6, 0, 0]}
-            >
-              {data.map((item) => (
-                <Cell
-                  key={item.estado}
-                  fill={item.color}
-                />
-              ))}
-            </Bar>
-
-          </BarChart>
-
-        </ResponsiveContainer>
-
-      </div>
-
+              <Bar dataKey="tareas" radius={[6, 6, 0, 0]}>
+                {data.map((item) => (
+                  <Cell key={item.estado} fill={item.color} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-80">
+          <p className="text-gray-500 text-lg">No tienes tareas.</p>
+        </div>
+      )}
     </div>
   );
 }

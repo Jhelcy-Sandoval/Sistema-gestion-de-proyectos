@@ -33,8 +33,8 @@ export default function TaskList () {
       <div className="bg-[--card] border border-slate-200 p-4 rounded-xl text-sm">
         <h1 className="text-lg p-2 text-gray-600 font-bold">Lista de tareas por prioridad</h1>
         <div className="grid grid-cols-3 gap-3">
-          <div className="border border-red-400 border-t-8 rounded-xl bg-[--danger-soft] p-2 space-y-2">
-            <p className="text-red-600 font-bold">Prioridad alta</p>
+          <div className="border border-[--danger] border-t-8 rounded-xl bg-[--danger-soft] p-2 space-y-2">
+            <p className="text-[--danger] font-bold">Prioridad alta</p>
             {taskAlta.length > 0 ? (
               taskAlta.map((task, index) => (
               <div key={index} className="bg-[--card] rounded-xl p-2">
@@ -45,8 +45,8 @@ export default function TaskList () {
                 <p className="text-center text-gray-500">No hay tareas de Prioridad alta</p>
               )}
           </div>
-          <div className="border border-[amber-400] border-t-8 rounded-xl bg-amber-200 p-2 space-y-2">
-            <p className="text-amber-600 font-bold">Prioridad media</p> 
+          <div className="border border-[--warning] border-t-8 rounded-xl bg-[--warning-soft] p-2 space-y-2">
+            <p className="text-[--warning] font-bold">Prioridad media</p> 
             {taskMedia.length > 0 ? (
               taskMedia.map((task, index) => (
               <div key={index} className="bg-[--card] rounded-xl p-2">
@@ -57,8 +57,8 @@ export default function TaskList () {
               <p className="text-center text-gray-500">No hay tareas de Prioridad media</p>
             )}
           </div>
-          <div className="border border-green-400 border-t-8 rounded-xl bg-green-200 p-2 space-y-2">
-            <p className="text-green-600 font-bold">Prioridad baja</p> 
+          <div className="border border-[--success] border-t-8 rounded-xl bg-[--success-soft] p-2 space-y-2">
+            <p className="text-[--success] font-bold">Prioridad baja</p> 
             {taskBaja.length > 0 ? (
               taskBaja.map((task, index) => ( 
               <div key={index} className="bg-[--card] rounded-xl p-2">
