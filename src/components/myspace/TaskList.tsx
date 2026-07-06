@@ -2,19 +2,28 @@ import { Link } from "react-router-dom";
 import { Task } from "../../types/types";
 
 interface tasksProps {
-  mytasks:Task[]
+  mytasks: Task[];
+  role: string | undefined;
 }
 
-export default function TaskList({mytasks}:tasksProps) {
-
-  const myTasks = mytasks
+export default function TaskList({ mytasks, role }: tasksProps) {
+  const myTasks = mytasks;
 
   return (
     <div>
       <div className="flex justify-between items-center mb-5">
         <div>
-          <h2 className="text-2xl font-bold">Mis tareas</h2>
-          <p className="text-gray-400">Tareas asignadas a ti</p>
+          <h2 className="text-2xl font-bold">
+            {role === "developer"
+              ? "Mis tareas"
+              : "Tareas recientes del equipo"}
+          </h2>
+
+          <p className="text-gray-400">
+            {role === "developer"
+              ? "Tareas asignadas a ti"
+              : "Últimas tareas del equipo"}
+          </p>
         </div>
 
         <Link to="/projects" className="text-blue-500 hover:underline">
@@ -24,9 +33,7 @@ export default function TaskList({mytasks}:tasksProps) {
 
       {myTasks.length === 0 ? (
         <div className="text-center py-16">
-          <p className="mt-4 text-gray-400">
-            No tienes tareas asignadas.
-          </p>
+          <p className="mt-4 text-gray-400">No tienes tareas asignadas.</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -57,9 +64,7 @@ export default function TaskList({mytasks}:tasksProps) {
                 <div>
                   <h3 className="font-semibold">{task.title}</h3>
 
-                  <p className="text-sm text-gray-400">
-                    {task.projectId}
-                  </p>
+                  <p className="text-sm text-gray-400">{task.projectId}</p>
                 </div>
               </div>
 
@@ -69,8 +74,8 @@ export default function TaskList({mytasks}:tasksProps) {
                     task.priority === "high"
                       ? "bg-red-100 text-red-600"
                       : task.priority === "medium"
-                      ? "bg-yellow-100 text-yellow-700"
-                      : "bg-green-100 text-green-700"
+                        ? "bg-yellow-100 text-yellow-700"
+                        : "bg-green-100 text-green-700"
                   }`}
                 >
                   {task.priority}

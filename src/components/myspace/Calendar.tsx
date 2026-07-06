@@ -1,12 +1,12 @@
 import { Task } from "../../types/types";
 
-interface calendarProps {
-  mytasks:Task[]
+interface CalendarProps {
+  mytasks: Task[];
+  role: string | undefined;
 }
 
-export default function Calendar({mytasks}:calendarProps) {
-
-  const tasks = mytasks
+export default function Calendar({ mytasks, role }: CalendarProps) {
+  const tasks = mytasks;
 
   const upcomingTasks = tasks
     .filter((task) => task.dueDate)
@@ -15,27 +15,44 @@ export default function Calendar({mytasks}:calendarProps) {
     )
     .slice(0, 6);
 
+  const texts = {
+    title:
+      role === "developer"
+        ? "Próximos vencimientos"
+        : "Próximos vencimientos del equipo",
+
+    description:
+      role === "developer"
+        ? "Tus tareas para los próximos días"
+        : "Tareas del equipo para los próximos días",
+
+    empty:
+      role === "developer"
+        ? "No tienes tareas programadas."
+        : "No hay tareas programadas para el equipo.",
+  };
+
   return (
     <div>
       <div className="mb-5">
-        <h2 className="text-2xl font-bold">Próximos vencimientos</h2>
+        <h2 className="text-2xl font-bold">{texts.title}</h2>
 
-        <p className="text-gray-400">Tus tareas para los próximos días</p>
+        <p className="text-gray-400">{texts.description}</p>
       </div>
 
       {upcomingTasks.length === 0 ? (
         <div className="text-center py-12">
-          <p className="mt-4 text-gray-400">No tienes tareas programadas.</p>
+          <p className="mt-4 text-gray-400">{texts.empty}</p>
         </div>
       ) : (
         <div className="space-y-4">
           {upcomingTasks.map((task) => {
             const dueDate = new Date(task.dueDate!);
-
             const today = new Date();
 
             const diffDays = Math.ceil(
-              (dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24),
+              (dueDate.getTime() - today.getTime()) /
+                (1000 * 60 * 60 * 24),
             );
 
             return (
@@ -59,17 +76,17 @@ export default function Calendar({mytasks}:calendarProps) {
                       diffDays < 0
                         ? "text-red-500"
                         : diffDays <= 2
-                          ? "text-yellow-500"
-                          : "text-gray-400"
+                        ? "text-yellow-500"
+                        : "text-gray-400"
                     }`}
                   >
                     {diffDays < 0
                       ? "Vencida"
                       : diffDays === 0
-                        ? "Hoy"
-                        : diffDays === 1
-                          ? "Mañana"
-                          : `En ${diffDays} días`}
+                      ? "Hoy"
+                      : diffDays === 1
+                      ? "Mañana"
+                      : `En ${diffDays} días`}
                   </span>
                 </div>
               </div>
