@@ -1,12 +1,14 @@
 import "../App.css";
 import ProjectsFetch from "../components/projects";
 import ProjectModel from "../components/projectmodel";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Projects() {
   const [isActive, setIsActive] = useState(false);
   const [refreshed, setRefreshed] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  const formRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -17,6 +19,15 @@ export default function Projects() {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    if (isActive && isMobile) {
+      formRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [isActive, isMobile]);
 
   const toggleIsActive = () => {
     setIsActive(!isActive);
@@ -37,8 +48,8 @@ export default function Projects() {
           isMobile
             ? "w-full"
             : isActive
-              ? "w-2/3 transition-all duration-300"
-              : "w-full transition-all duration-300"
+            ? "w-2/3 transition-all duration-300"
+            : "w-full transition-all duration-300"
         }
       >
         <ProjectsFetch
@@ -50,9 +61,10 @@ export default function Projects() {
 
       {isActive && (
         <section
+          ref={formRef}
           className={
             isMobile
-              ? "w-full border-t border-slate-700"
+              ? "w-full border-t border-slate-700 scroll-mt-20"
               : "w-1/3 border-l border-slate-700"
           }
         >

@@ -10,7 +10,7 @@ export default function DefaultLayout() {
           <Sidebar />
         </aside>
 
-        <main className="flex-1 content overflow-x-auto">
+        <main className="flex-1 content overflow-x-auto pb-16 md:pb-0">
           <Outlet />
         </main>
       </div>

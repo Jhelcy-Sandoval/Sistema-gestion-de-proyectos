@@ -35,8 +35,8 @@ export default function CategoryForm({
   });
 
   return (
-    <section>
-      <div className="content p-4 m-4 rounded-lg mode border-t-4">
+    <section className="h-full">
+      <div className="content p-4 rounded-lg mode border-t-4 h-full">
         <div className="flex p-3 justify-between">
           <h1 className="font-bold text-2xl text-wrap w-full">
             Form New Category

@@ -207,7 +207,7 @@ export default function TaskGet({
 
   return (
     <>
-      <div className="flex flex-row">
+      <div className="flex flex-row f">
         <div className="flex-1 w-full">
           <div className="content p-4 mt-4 rounded-lg mode border-t-4">
             <div className="flex my-4 justify-between box-border">
@@ -231,7 +231,7 @@ export default function TaskGet({
                     {oneTask.title}
                   </p>
                   <div className="border p-2 rounded-lg bg-slate-200 ">
-                    <div className="grid grid-cols-2 gap-2 py-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 py-2">
                       <div className="bg-[--card] p-2 rounded-xl h-32">
                         <h1 className=" text-gray-600 font-bold	">
                           Descripción
@@ -266,7 +266,7 @@ export default function TaskGet({
                         </div>
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       <div className="grid gap-2">
                         <div className="grid grid-cols-3 gap-2 h-full max-h-24">
                           <div className="bg-[--card] p-2 rounded-xl">

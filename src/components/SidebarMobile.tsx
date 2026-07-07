@@ -20,7 +20,7 @@ export default function SidebarMobile() {
     const path = location.pathname;
 
     if (path === "/home") setActiveButton("home");
-    else if (path === "/dashboard") setActiveButton("dashboard");
+    else if (path === "/my-space") setActiveButton("my-space");
     else if (path === "/projects") setActiveButton("projects");
     else if (path === "/files") setActiveButton("files");
     else if (path === "/user") setActiveButton("user");
@@ -42,7 +42,7 @@ export default function SidebarMobile() {
       </button>
 
       <button
-        onClick={() => handleButtonClick("/dashboard", "dashboard")}
+        onClick={() => handleButtonClick("/my-space", "my-space")}
         className={`${activeButton === "dashboard" ? "text-blue-500" : "text-gray-300"} transition-colors`}
       >
         <FiBarChart2 size={26} />

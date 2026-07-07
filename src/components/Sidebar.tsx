@@ -49,9 +49,9 @@ export default function Sidebar() {
                     )}
                 </div>
               </div>
-              <div className=" h-full flex items-center justify-center content-center ">
+              <div className="flex items-center">
                 {typeof userget?.name === "string" ? (
-                  <p className="text-wrap truncate ">{userget.name}</p>
+                  <p className="text-wrap truncate text-center">{userget.name}</p>
                 ) : (
                   <p>Name</p>
                 )}
