@@ -64,7 +64,7 @@ export default function TaskForm({ onToggle, oneProject }: TaskFormProps) {
 
   return (
     <section>
-      <div className="content p-4 m-4 rounded-lg mode border-t-4">
+      <div className="content p-4 rounded-lg mode border-t-4 h-full">
         <div className="flex justify-between p-3">
           <h1 className="font-bold text-2xl">Form New Task</h1>
 

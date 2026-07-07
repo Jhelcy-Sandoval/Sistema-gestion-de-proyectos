@@ -30,9 +30,9 @@ export default function TaskList () {
 
   return (
     <>
-      <div className="bg-[--card] border border-slate-200 p-4 rounded-xl text-sm">
+      <div className="bg-[--card] border border-slate-200 p-4 rounded-xl text-sm flex flex-wrap">
         <h1 className="text-lg p-2 text-gray-600 font-bold">Lista de tareas por prioridad</h1>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3 w-full">
           <div className="border border-[--danger] border-t-8 rounded-xl bg-[--danger-soft] p-2 space-y-2">
             <p className="text-[--danger] font-bold">Prioridad alta</p>
             {taskAlta.length > 0 ? (

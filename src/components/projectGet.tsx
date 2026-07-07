@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getOneProject, updateProject } from "../services/projectsService";
 import { useAuth } from "../context/AuthContext";
 import { useForm } from "react-hook-form";
@@ -22,6 +22,7 @@ export default function ProjectGet({
   const [newTask, setNewTask] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task>();
+  const formRef = useRef<HTMLDivElement>(null);
 
   const closeToggle = () => {
     setSelectedProject(null);
@@ -60,6 +61,22 @@ export default function ProjectGet({
       fetchProject();
     }
   }, [isLogin, selectedProject]);
+
+  useEffect(() => {
+    if (newCategory && window.innerWidth < 768) {
+      formRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+
+    if (newTask && window.innerWidth < 768) {
+      formRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [newCategory, newTask]);
 
   const ToggleForm = () => {
     setIsActive(!newCategory);
@@ -229,80 +246,84 @@ export default function ProjectGet({
                 </p>
               </div>
             </div>
-            <section className="flex flex-row">
+            <section className="mt-4 flex flex-col gap-4 lg:flex-row">
               {!selectedTask && (
-                <div className="flex flex-row w-full">
-                  <div className="flex-1 w-full">
-                    <div className="content p-4 mt-4 rounded-lg mode border-t-4">
-                      <div className="flex flex-wrap my-4 justify-between box-border">
-                        <h1 className="text-2xl">Tareas</h1>
-                        <div className="flex items-center justify-between flex-wrap gap-3">
-                          {user.user.role !== "developer" && (
-                            <div className="flex flex-wrap gap-3">
-                              <button
-                                className="rounded-lg bg-[--primary] px-4 py-2 text-sm font-semibold text-white shadow hover:bg-indigo-500 transition"
-                                onClick={ToggleForm}
-                              >
-                                + Nueva categoría
-                              </button>
+                <div
+                  className={`${
+                    newCategory || newTask ? "lg:w-3/4" : "w-full"
+                  } transition-all duration-300`}
+                >
+                  <div className="content mode h-full rounded-lg border-t-4 p-4">
+                    <div className="my-4 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                      <h1 className="text-2xl">Tareas</h1>
 
-                              <button
-                                className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-emerald-500 transition"
-                                onClick={ToggleFormTask}
-                              >
-                                + Nueva tarea
-                              </button>
-                            </div>
-                          )}
+                      <div className="flex flex-wrap gap-3">
+                        {user.user.role !== "developer" && (
+                          <>
+                            <button
+                              className="rounded-lg bg-[--primary] px-4 py-2 text-sm font-semibold text-white shadow transition hover:bg-indigo-500"
+                              onClick={ToggleForm}
+                            >
+                              + Nueva categoría
+                            </button>
 
-                          <button
-                            className="relative overflow-hidden rounded-lg border border-gray-300 bg-[--card] px-4 py-2 font-semibold text-black transition group"
-                            onClick={closeToggle}
-                          >
-                            <span className="absolute left-0 top-0 h-full w-0 bg-[--primary] transition-all duration-300 group-hover:w-full"></span>
-
-                            <span className="relative flex items-center gap-2 group-hover:text-white">
-                              <img
-                                src="/atras.svg"
-                                alt="Atrás"
-                                className="w-4 h-4"
-                              />
-                              Atrás
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                      <div>
-                        {oneProject && (
-                          <ProjectTaks
-                            oneProject={oneProject}
-                            refresh={refresh}
-                            onTaskSelect={handleTaskSelect}
-                          />
+                            <button
+                              className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow transition hover:bg-emerald-500"
+                              onClick={ToggleFormTask}
+                            >
+                              + Nueva tarea
+                            </button>
+                          </>
                         )}
+
+                        <button
+                          className="relative overflow-hidden rounded-lg border border-gray-300 bg-[--card] px-4 py-2 font-semibold transition group"
+                          onClick={closeToggle}
+                        >
+                          <span className="absolute left-0 top-0 h-full w-0 bg-[--primary] transition-all duration-300 group-hover:w-full"></span>
+
+                          <span className="relative flex items-center text-black gap-2 group-hover:text-white">
+                            <img
+                              src="/atras.svg"
+                              alt="Atrás"
+                              className="h-4 w-4"
+                            />
+                            Atrás
+                          </span>
+                        </button>
                       </div>
                     </div>
+
+                    {oneProject && (
+                      <ProjectTaks
+                        oneProject={oneProject}
+                        refresh={refresh}
+                        onTaskSelect={handleTaskSelect}
+                      />
+                    )}
                   </div>
                 </div>
               )}
-              <div className={`${newCategory ? "w-1/3" : "flex-none"}`}>
-                {newCategory && (
-                  <CategoryForm
-                    onToggle={ToggleForm}
-                    newCategory={newCategory}
-                    oneProject={oneProject._id}
-                  />
-                )}
-              </div>
-              <div className={`${newTask ? "w-1/3" : "flex-none"}`}>
-                {newTask && (
-                  <TaskForm
-                    onToggle={ToggleFormTask}
-                    newTask={newTask}
-                    oneProject={oneProject._id}
-                  />
-                )}
-              </div>
+
+              {(newCategory || newTask) && (
+                <aside className="w-full lg:w-1/4" ref={formRef}>
+                  {newCategory && (
+                    <CategoryForm
+                      onToggle={ToggleForm}
+                      newCategory={newCategory}
+                      oneProject={oneProject._id}
+                    />
+                  )}
+
+                  {newTask && (
+                    <TaskForm
+                      onToggle={ToggleFormTask}
+                      newTask={newTask}
+                      oneProject={oneProject._id}
+                    />
+                  )}
+                </aside>
+              )}
             </section>
             <div>
               {selectedTask && (
